@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-
-
     // When button "Scrape New Articles" is clicked, send ajax api request for articles
     $("#scrape").on("click", function(){
         $("#articleContainer").empty();

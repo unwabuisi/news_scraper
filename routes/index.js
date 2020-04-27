@@ -14,12 +14,18 @@ router.get('/', function (req, res) {
 // saved articles page
 router.get('/saved', function(req,res){
 
-    db.Article.find({}).populate("notes").exec(function(err,articles){
+    db.Article.find({}).populate("notes").lean().exec(function(err,results){
         if (err) {
             res.status(500).send(err);
         }
         else {
-            res.send(articles);
+            var articleObjects = [];
+            results.forEach(function(item, i) {
+                articleObjects.push(item);
+            });
+
+            // console.log(articleObjects);
+            res.render("savedarticles",{articles:articleObjects});
         }
     });
 
