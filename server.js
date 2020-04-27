@@ -1,6 +1,4 @@
 // Dependencies ==============================================================
-var cheerio = require("cheerio");
-var axios = require("axios");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
@@ -46,7 +44,6 @@ mongoose.connect("mongodb://localhost/newsScraper", {
     useUnifiedTopology: true
 });
 var connection = mongoose.connection;
-var db = require("./models");
 
 // Show any mongoose errors
 connection.on("error", function(error) {
@@ -58,5 +55,5 @@ connection.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-
+var db = require("./models");
 
