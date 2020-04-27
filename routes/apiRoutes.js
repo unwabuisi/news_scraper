@@ -60,4 +60,14 @@ router.get("/scrape", function(req,res){
     });
 });
 
+router.get("/scrape/:commentsPageID", function(req,res){
+    var commentsPageID = req.params.commentsPageID.toString();
+
+    axios.get("https://news.ycombinator.com/item?id="+commentsPageID).then(function(html){
+        var $ = cheerio.load(html.data);
+        var topComment = $(".comment").children().first().html();
+        res.status(200).send(topComment);
+    });
+});
+
 module.exports = router;
