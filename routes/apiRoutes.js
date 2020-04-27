@@ -109,4 +109,15 @@ router.get("/notes", function(req,res){
     });
 });
 
+router.get("/all", function(req,res){
+    db.Article.find({}).populate("notes").exec(function(err,articles){
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            res.status(200).json(articles).end();
+        }
+    });
+});
+
 module.exports = router;
