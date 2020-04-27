@@ -55,10 +55,8 @@ router.get("/scrape", function(req,res){
                 comments: "https://news.ycombinator.com/"+commentURIList[i]
             });
         });
-        var hbsObject = {
-            articles: completelisting
-        };
-        console.log(completelisting);
+
+        res.status(200).json(completelisting);
     });
 });
 
