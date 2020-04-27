@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+
     // When button "Scrape New Articles" is clicked, send ajax api request for articles
     $("#scrape").on("click", function(){
         $("#articleContainer").empty();
@@ -19,11 +21,13 @@ $(document).ready(function(){
                 }
 
                 var el = `
-                <h4><a href="${item.link}">${item.title}</a></h4>
-                <p>Link:    <a href="${item.link}">${item.link}</a></p>
-                <p>Comments:    <a href="${item.comments}">${item.comments}</a></p>
-                <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
-                <button type="button" name="button">Save Article</button>
+                <div id=article_${i}>
+                    <h4><a href="${item.link}">${item.title}</a></h4>
+                    <p>Link:    <a href="${item.link}">${item.link}</a></p>
+                    <p>Comments:    <a href="${item.comments}">${item.comments}</a></p>
+                    <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
+                    <button type="button" name="button" class="saveArticlebtn" >Save Article</button>
+                </div>
                 <hr>
                 `;
                 $("#articleContainer").append(el);
@@ -33,7 +37,7 @@ $(document).ready(function(){
     });
 
     // uses an event delegator on the container for the new topcomment button class
-    $("#articleContainer").on("click", ".topCommentbtn" ,function(){
+    $("#articleContainer").on("click", ".topCommentbtn" , function(){
         var parentNode = $(this);
         var commentsPageID = $(this).data("cmt");
 
@@ -45,6 +49,42 @@ $(document).ready(function(){
             parentNode.before("<p>" + topcmt + "</p>");
 
         }).done(function(data){}).fail(function(error){});
+
+    });
+
+    // uses event delegator on container for new saveArticle button class
+    // Also handles sending data to api backend for db insert
+    $("#articleContainer").on("click", ".saveArticlebtn", function(){
+        var parentNode = $(this).parent();
+        var currentNode = $(this);
+        var fullDivContents = parentNode.contents();
+        var articleID = parentNode.attr("id");
+
+
+        var link = $(fullDivContents[3]).children().attr("href");
+        var title =  $(fullDivContents[1]).text();
+        var cmtslink = $(fullDivContents[5]).children().attr("href");
+
+
+
+        var data = {
+            title: title,
+            link: link,
+            cmtslink: cmtslink
+        };
+
+
+        $.ajax({
+            url:"/api/save",
+            type: "POST",
+            data: data
+        }).done(function(response){
+            $(fullDivContents[9]).prop("disabled",true);
+            currentNode.text("Saved");
+        }).fail(function(error){
+            console.log(error);
+        });
+
 
     });
 

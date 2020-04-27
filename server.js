@@ -9,18 +9,18 @@ var exphbs = require("express-handlebars");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+// Use morgan and body parser with our app
+// app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 // Initialize Express and routes
 var routes = require("./routes/index");
 var apiRoutes = require("./routes/apiRoutes");
 app.use("/", routes);
 app.use("/api", apiRoutes);
-
-// Use morgan and body parser with our app
-// app.use(logger("dev"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
 
 // Make public a static dir
 app.use(express.static("public"));

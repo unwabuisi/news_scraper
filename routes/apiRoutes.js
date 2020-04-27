@@ -3,6 +3,8 @@ var express = require("express");
 var router = express.Router();
 var cheerio = require("cheerio");
 var axios = require("axios");
+var db = require("../models");
+
 
 router.get("/scrape", function(req,res){
     axios.get("https://news.ycombinator.com/over?points=100").then(function(html){
@@ -67,6 +69,43 @@ router.get("/scrape/:commentsPageID", function(req,res){
         var $ = cheerio.load(html.data);
         var topComment = $(".comment").children().first().html();
         res.status(200).send(topComment);
+    });
+});
+
+router.post("/save", function(req,res){
+
+    // creates new article instance / object
+    var savedArticle = new db.Article({
+        title: req.body.title,
+        link: req.body.link,
+        comments: req.body.cmtslink
+    });
+
+    // sends article instance to the database
+    savedArticle.save().then(function(resp){
+        res.status(200).end();
+    }).catch(function(err){
+        res.status(500).send(err);
+        console.log(err);
+    });
+
+
+});
+
+router.get("/articles", function(req,res){
+
+    db.Article.find({}).then(function(articles){
+        res.status(200).json(articles).end();
+    }).catch(function(err){
+        res.status(500).send(err);
+    });
+});
+
+router.get("/notes", function(req,res){
+    db.Note.find({}).then(function(notes){
+        res.status(200).json(notes).end();
+    }).catch(function(err){
+        res.status(500).send(err);
     });
 });
 
