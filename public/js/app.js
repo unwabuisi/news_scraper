@@ -75,7 +75,7 @@ $(document).ready(function(){
 
 
         $.ajax({
-            url:"/api/save",
+            url:"/api/articles",
             type: "POST",
             data: data
         }).done(function(response){

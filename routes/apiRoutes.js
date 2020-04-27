@@ -72,7 +72,26 @@ router.get("/scrape/:commentsPageID", function(req,res){
     });
 });
 
-router.post("/save", function(req,res){
+router.get("/all", function(req,res){
+    db.Article.find({}).populate("notes").exec(function(err,articles){
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            res.status(200).json(articles).end();
+        }
+    });
+});
+
+router.get("/articles", function(req,res){
+
+    db.Article.find({}).then(function(articles){
+        res.status(200).json(articles).end();
+    }).catch(function(err){
+        res.status(500).send(err);
+    });
+});
+router.post("/articles", function(req,res){
 
     // creates new article instance / object
     var savedArticle = new db.Article({
@@ -92,15 +111,6 @@ router.post("/save", function(req,res){
 
 });
 
-router.get("/articles", function(req,res){
-
-    db.Article.find({}).then(function(articles){
-        res.status(200).json(articles).end();
-    }).catch(function(err){
-        res.status(500).send(err);
-    });
-});
-
 router.get("/notes", function(req,res){
     db.Note.find({}).then(function(notes){
         res.status(200).json(notes).end();
@@ -108,16 +118,22 @@ router.get("/notes", function(req,res){
         res.status(500).send(err);
     });
 });
+router.post("/notes", function(req,res){
 
-router.get("/all", function(req,res){
-    db.Article.find({}).populate("notes").exec(function(err,articles){
-        if (err) {
-            res.status(500).send(err);
-        }
-        else {
-            res.status(200).json(articles).end();
-        }
+    // creates new note instance / object
+    var savedNote = new db.Note({
+        body: req.body.textBody
+    });
+
+    // sends note instance to the database
+    savedNote.save().then(function(resp){
+        res.status(200).end();
+    }).catch(function(err){
+        res.status(500).send(err);
+        console.log(err);
     });
 });
+
+
 
 module.exports = router;
