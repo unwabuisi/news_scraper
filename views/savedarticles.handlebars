@@ -10,9 +10,17 @@
 
 {{#each articles}}
     {{this.title}}<br>
-    {{this.link}}<br>
+    <a href="{{this.link}}">{{this.link}}</a><br>
+    <div id="articleNotes_{{this._id}}">
+        <form class="noteSubmit" hidden>
+            <textarea name="notes" cols="120"></textarea><br>
+            <input type="text" name="articleID" value="{{this._id}}" hidden>
+            <button name="button" type="submit">Add Note</button>
+        </form>
+        <button type="button" name="button" class="articleNotesbtn" data-articleid={{this._id}}>Article Notes</button>
+    </div>
 
-    <button type="button" name="button">Article Notes</button>
+
     <hr>
 {{/each}}
 

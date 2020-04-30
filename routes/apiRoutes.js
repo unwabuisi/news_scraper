@@ -82,6 +82,17 @@ router.get("/all", function(req,res){
         }
     });
 });
+router.get("/all/:articleid", function(req,res){
+
+    db.Article.findById({_id:req.params.articleid}).populate("notes").exec(function(err,articles){
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            res.status(200).json(articles).end();
+        }
+    });
+});
 
 router.get("/articles", function(req,res){
 

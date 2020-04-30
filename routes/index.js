@@ -24,7 +24,7 @@ router.get('/saved', function(req,res){
                 articleObjects.push(item);
             });
 
-            // console.log(articleObjects);
+            console.log(articleObjects);
             res.render("savedarticles",{articles:articleObjects});
         }
     });
