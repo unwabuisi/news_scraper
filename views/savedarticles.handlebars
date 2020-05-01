@@ -1,7 +1,7 @@
 <h1>Welcome</h1>
 
 <a href="/"><button type="button" name="button">Home</button></a>
-<button type="button" name="button" id="scrape">Clear Saved Articles</button>
+<button type="button" name="button" id="clear">Clear Saved Articles</button>
 
 <div id="header"></div>
 
@@ -12,6 +12,7 @@
     {{this.title}}<br>
     <a href="{{this.link}}">{{this.link}}</a><br>
     <div id="articleNotes_{{this._id}}">
+        <div id="notelist_{{this._id}}"></div>
         <form class="noteSubmit" hidden>
             <textarea name="notes" cols="120"></textarea><br>
             <input type="text" name="articleID" value="{{this._id}}" hidden>

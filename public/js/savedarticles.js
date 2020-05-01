@@ -1,28 +1,45 @@
 $(document).ready(function(){
 
+    // this re-usable function lists the notes in the appropriate div respective to article
+    function noteLister(articleID, notesDiv) {
+        $.get("/api/all/"+articleID, function(data){
+
+        }).done(function(response){
+
+            notesDiv.empty();
+            response.notes.forEach(function(item, i) {
+                notesDiv.append(item.body+"<br>");
+            });
+        });
+    }
+
+    // lists the notes associated with the artcile and unhides the hidden div
     $(".articleNotesbtn").on("click", function(){
         var articleID = $(this).data("articleid");
         var parentNode = $(this).parent();
+        var noteDiv = $("#notelist_"+articleID);
 
-        $.get("/api/all/"+articleID, function(data){
-            console.log(data.notes);
-        });
+        noteLister(articleID,noteDiv);
 
         // show text area to add notes
         parentNode.find("form").show();
-        // parentNode.children().find("textarea").show();
+
     });
 
+    // sends note text to database and refreshes / updates the notes div to show latest note
     $(".noteSubmit").on("submit", function(e){
         e.preventDefault();
         var form = $(this);
         var noteText = form[0].elements[0].value;
+        var noteTextDiv = form[0].elements[0];
         var articleID = form[0].elements[1].value;
+        var noteDiv = $("#notelist_"+articleID);
         var note = {
             textBody:noteText
         };
-        // console.log(noteText);
-        // console.log(articleID);
+
+        console.log($(this).children().first());
+
 
         $.ajax({
             type: "POST",
@@ -42,6 +59,9 @@ $(document).ready(function(){
                     url: "/api/articles/"+articleID,
                     data: note_id,
                     success: function(response){
+                        noteLister(articleID,noteDiv);
+                        //reset textarea
+                        $(this).children().first().val("");
                         console.log(response);
                     }
                 });
@@ -50,5 +70,7 @@ $(document).ready(function(){
 
     });
 
-
+    $("#clear").on("click", function(){
+        
+    });
 });

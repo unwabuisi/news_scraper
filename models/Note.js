@@ -8,7 +8,8 @@ var NoteSchema = new Schema({
 
   // Just a string
     body: {
-      type: String
+      type: String,
+      minlength: [1,'Please enter at least 1 character']
     },
 
     createdAt: {

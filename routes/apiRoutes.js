@@ -73,7 +73,7 @@ router.get("/scrape/:commentsPageID", function(req,res){
 });
 
 router.get("/all", function(req,res){
-    db.Article.find({}).populate("notes").exec(function(err,articles){
+    db.Article.find({}).populate("notes").lean().exec(function(err,articles){
         if (err) {
             res.status(500).send(err);
         }
@@ -82,11 +82,8 @@ router.get("/all", function(req,res){
         }
     });
 });
+
 router.get("/all/:articleid", function(req,res){
-
-    console.log(req.params.articleid);
-    console.log(req.body);
-
     db.Article.findById({_id:req.params.articleid}).populate("notes").exec(function(err,article){
         if (err) {
             res.status(500).send(err);
@@ -126,30 +123,20 @@ router.post("/articles", function(req,res){
 });
 router.post("/articles/:articleid", function(req,res){
 
-    db.Article.update({_id:req.params.articleid},{
+    // add note id to article's notes array
+    db.Article.updateOne({_id:req.params.articleid},{
         $push: {
             notes: req.body.noteID
         }
     }).then(function(response){
 
-        res.send(response);
+        res.status(200).json(response);
 
+    }).catch(function(err){
+
+        res.status(500).send(err);
     });
 
-    // creates new article instance / object
-    // var savedArticle = new db.Article({
-    //     title: req.body.title,
-    //     link: req.body.link,
-    //     comments: req.body.cmtslink
-    // });
-
-    // sends article instance to the database
-    // savedArticle.save().then(function(resp){
-    //     res.status(200).end();
-    // }).catch(function(err){
-    //     res.status(500).send(err);
-    //     console.log(err);
-    // });
 
 
 });
