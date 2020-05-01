@@ -84,12 +84,15 @@ router.get("/all", function(req,res){
 });
 router.get("/all/:articleid", function(req,res){
 
-    db.Article.findById({_id:req.params.articleid}).populate("notes").exec(function(err,articles){
+    console.log(req.params.articleid);
+    console.log(req.body);
+
+    db.Article.findById({_id:req.params.articleid}).populate("notes").exec(function(err,article){
         if (err) {
             res.status(500).send(err);
         }
         else {
-            res.status(200).json(articles).end();
+            res.status(200).json(article).end();
         }
     });
 });
@@ -121,6 +124,36 @@ router.post("/articles", function(req,res){
 
 
 });
+router.post("/articles/:articleid", function(req,res){
+
+    db.Article.update({_id:req.params.articleid},{
+        $push: {
+            notes: req.body.noteID
+        }
+    }).then(function(response){
+
+        res.send(response);
+
+    });
+
+    // creates new article instance / object
+    // var savedArticle = new db.Article({
+    //     title: req.body.title,
+    //     link: req.body.link,
+    //     comments: req.body.cmtslink
+    // });
+
+    // sends article instance to the database
+    // savedArticle.save().then(function(resp){
+    //     res.status(200).end();
+    // }).catch(function(err){
+    //     res.status(500).send(err);
+    //     console.log(err);
+    // });
+
+
+});
+
 
 router.get("/notes", function(req,res){
     db.Note.find({}).then(function(notes){
@@ -138,7 +171,7 @@ router.post("/notes", function(req,res){
 
     // sends note instance to the database
     savedNote.save().then(function(resp){
-        res.status(200).end();
+        res.status(200).send(resp).end();
     }).catch(function(err){
         res.status(500).send(err);
         console.log(err);

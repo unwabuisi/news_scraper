@@ -16,11 +16,38 @@ $(document).ready(function(){
     $(".noteSubmit").on("submit", function(e){
         e.preventDefault();
         var form = $(this);
-        console.log(form);
-        console.log(form[0].elements[0]);
-        // var textarea = form.elements["notes"].value;
+        var noteText = form[0].elements[0].value;
+        var articleID = form[0].elements[1].value;
+        var note = {
+            textBody:noteText
+        };
+        // console.log(noteText);
+        // console.log(articleID);
 
-        // console.log();
+        $.ajax({
+            type: "POST",
+            url: "/api/notes",
+            data: note,
+            success: function(noteObject){
+
+                //noteObject returns as an object with the inserted Note ID and body
+                console.log(noteObject);
+
+                var note_id = {
+                    noteID:noteObject._id
+                };
+
+                $.ajax({
+                    type:"POST",
+                    url: "/api/articles/"+articleID,
+                    data: note_id,
+                    success: function(response){
+                        console.log(response);
+                    }
+                });
+            }
+        });
+
     });
 
 
