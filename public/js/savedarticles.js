@@ -38,9 +38,8 @@ $(document).ready(function(){
             textBody:noteText
         };
 
-        console.log($(this).children().first());
-
-
+        // reset text area input box
+        $(this).children().first().val("");
         $.ajax({
             type: "POST",
             url: "/api/notes",
@@ -48,7 +47,7 @@ $(document).ready(function(){
             success: function(noteObject){
 
                 //noteObject returns as an object with the inserted Note ID and body
-                console.log(noteObject);
+                // console.log(noteObject);
 
                 var note_id = {
                     noteID:noteObject._id
@@ -60,8 +59,6 @@ $(document).ready(function(){
                     data: note_id,
                     success: function(response){
                         noteLister(articleID,noteDiv);
-                        //reset textarea
-                        $(this).children().first().val("");
                         console.log(response);
                     }
                 });
@@ -70,7 +67,28 @@ $(document).ready(function(){
 
     });
 
+    // clear all articles from db and reload page?
     $("#clear").on("click", function(){
 
+    });
+
+    // handle deleting notes
+    $(".articleContainer").on("click", ".noteDeletebtn", function(){
+        var noteID = $(this).data("noteid");
+        var parentNode = $(this).parent();
+        var articleID = parentNode.attr("id").slice(9);
+
+        // console.log(parentNode);
+
+        $.ajax({
+            url: "/api/notes/"+noteID,
+            type: "DELETE"
+        }).done(function(response){
+            //note was successfully deleted
+            noteLister(articleID,parentNode);
+
+        }).fail(function(err){
+            console.log(err);
+        });
     });
 });

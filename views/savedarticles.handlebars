@@ -5,13 +5,10 @@
 
 <div id="header"></div>
 
-<div id="articleContainer"></div>
-
-
 {{#each articles}}
     {{this.title}}<br>
     <a href="{{this.link}}">{{this.link}}</a><br>
-    <div id="articleNotes_{{this._id}}">
+    <div class="articleContainer" id="articleNotes_{{this._id}}">
         <div id="notelist_{{this._id}}"></div>
         <form class="noteSubmit" hidden>
             <textarea name="notes" cols="120"></textarea><br>

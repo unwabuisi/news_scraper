@@ -165,7 +165,13 @@ router.post("/notes", function(req,res){
     });
 });
 router.delete("/notes/:noteid", function(req,res){
-    console.log(req.body);
+    db.Note.deleteOne({
+        _id:req.params.noteid
+    }).then(function(response){
+        res.status(200).send(response).end();
+    }).catch(function(err){
+        res.status(500).send(err);
+    });
 });
 
 
