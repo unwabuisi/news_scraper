@@ -164,7 +164,9 @@ router.post("/notes", function(req,res){
         console.log(err);
     });
 });
-
+router.delete("/notes/:noteid", function(req,res){
+    console.log(req.body);
+});
 
 
 module.exports = router;

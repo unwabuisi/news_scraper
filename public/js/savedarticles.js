@@ -8,7 +8,7 @@ $(document).ready(function(){
 
             notesDiv.empty();
             response.notes.forEach(function(item, i) {
-                notesDiv.append(item.body+"<br>");
+                notesDiv.append(`${item.body} \t\t<button type="button" class="noteDeletebtn" data-noteid="${item._id}">X</button><br>`);
             });
         });
     }
@@ -71,6 +71,6 @@ $(document).ready(function(){
     });
 
     $("#clear").on("click", function(){
-        
+
     });
 });

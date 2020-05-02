@@ -28,6 +28,9 @@ var ArticleSchema = new Schema({
 
 });
 
+
+
+
 // create a model, Article using the schema above
 var Article = mongoose.model("Article", ArticleSchema);
 
