@@ -27,9 +27,9 @@ $(document).ready(function(){
                         // yes the article exists in the database already
                         var el = `
                         <div id=article_${i}>
-                            <h4><a href="${item.link}">${item.title}</a></h4>
-                            <p>Link:    <a href="${item.link}">${item.link}</a></p>
-                            <p>Comments:    <a href="${item.comments}">${item.comments}</a></p>
+                            <h4><a target="_blank" href="${item.link}">${item.title}</a></h4>
+                            <p>Link:    <a target="_blank" href="${item.link}">${item.link}</a></p>
+                            <p>Comments:    <a target="_blank" href="${item.comments}">${item.comments}</a></p>
                             <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
                             <button type="button" name="button" class="saveArticlebtn" disabled>Saved</button>
                         </div>
@@ -42,9 +42,9 @@ $(document).ready(function(){
                         // no the article does not exist
                         var el = `
                         <div id=article_${i}>
-                            <h4><a href="${item.link}">${item.title}</a></h4>
-                            <p>Link:    <a href="${item.link}">${item.link}</a></p>
-                            <p>Comments:    <a href="${item.comments}">${item.comments}</a></p>
+                            <h4><a target="_blank" href="${item.link}">${item.title}</a></h4>
+                            <p>Link:    <a target="_blank" href="${item.link}">${item.link}</a></p>
+                            <p>Comments:    <a target="_blank" href="${item.comments}">${item.comments}</a></p>
                             <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
                             <button type="button" name="button" class="saveArticlebtn" >Save Article</button>
                         </div>
