@@ -59,17 +59,28 @@ $(document).ready(function(){
                     data: note_id,
                     success: function(response){
                         noteLister(articleID,noteDiv);
-                        console.log(response);
                     }
                 });
             }
+        }).done(function(response){
+            //response just returns the note object with _id, body, and createdAt
+            $("#error_"+articleID).empty();
+        }).fail(function(err){
+            $("#error_"+articleID).css("color","red").text(err.responseJSON.errors.body.message);
         });
 
     });
 
-    // clear all articles from db and reload page?
+    // clear all articles from db and reload page
     $("#clear").on("click", function(){
-
+        $.ajax({
+            url:"/api/articles",
+            type: "DELETE"
+        }).done(function(response){
+            location.reload();
+        }).fail(function(err){
+            console.log(err);
+        });
     });
 
     // handle deleting notes
@@ -77,8 +88,6 @@ $(document).ready(function(){
         var noteID = $(this).data("noteid");
         var parentNode = $(this).parent();
         var articleID = parentNode.attr("id").slice(9);
-
-        // console.log(parentNode);
 
         $.ajax({
             url: "/api/notes/"+noteID,

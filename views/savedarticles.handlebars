@@ -6,13 +6,15 @@
 <div id="header"></div>
 
 {{#each articles}}
-    {{this.title}}<br>
-    <a href="{{this.link}}">{{this.link}}</a><br>
+    <h4>{{this.title}}</h4>
+    <p>Link:    <a href="{{this.link}}">{{this.link}}</a></p>
+    <p>Comments:    <a href="{{this.comments}}">{{this.comments}}</a></p>
     <div class="articleContainer" id="articleNotes_{{this._id}}">
         <div id="notelist_{{this._id}}"></div>
         <form class="noteSubmit" hidden>
             <textarea name="notes" cols="120"></textarea><br>
             <input type="text" name="articleID" value="{{this._id}}" hidden>
+            <div id="error_{{this._id}}"></div>
             <button name="button" type="submit">Add Note</button>
         </form>
         <button type="button" name="button" class="articleNotesbtn" data-articleid={{this._id}}>Article Notes</button>

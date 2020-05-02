@@ -121,6 +121,22 @@ router.post("/articles", function(req,res){
 
 
 });
+router.post("/articles/exist", function(req,res){
+
+    // search database for title of article and return true / false value based on whether it is in DB or not
+    db.Article.findOne({title:req.body.title}).then(function(response){
+        if (response == null) {
+            res.status(200).send(false).end();
+        }
+        else {
+            res.status(200).send(true).end();
+        }
+
+    }).catch(function(err){
+        res.status(500).send(err).end();
+    });
+
+});
 router.post("/articles/:articleid", function(req,res){
 
     // add note id to article's notes array
@@ -140,7 +156,13 @@ router.post("/articles/:articleid", function(req,res){
 
 
 });
-
+router.delete("/articles", function(req,res){
+    db.Article.deleteMany({},function(response){
+    });
+    db.Note.deleteMany({}, function(response){
+    });
+    res.status(200).end();
+});
 
 router.get("/notes", function(req,res){
     db.Note.find({}).then(function(notes){

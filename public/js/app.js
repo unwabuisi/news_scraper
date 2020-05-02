@@ -6,29 +6,58 @@ $(document).ready(function(){
 
         $.get("/api/scrape", function(articles){
 
-            console.log(articles);
+            // console.log(articles);
             var len = articles.length;
-
 
 
             articles.forEach(function(item, i) {
 
-                // this is for the ASK HN links
+                // this is for the Ask HN: / Show HN: links which are not hosted on external sites and have the same link as the comments link
                 if (item.link.indexOf("item?id=") == 0) {
                     item.link = item.comments;
                 }
 
-                var el = `
-                <div id=article_${i}>
-                    <h4><a href="${item.link}">${item.title}</a></h4>
-                    <p>Link:    <a href="${item.link}">${item.link}</a></p>
-                    <p>Comments:    <a href="${item.comments}">${item.comments}</a></p>
-                    <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
-                    <button type="button" name="button" class="saveArticlebtn" >Save Article</button>
-                </div>
-                <hr>
-                `;
-                $("#articleContainer").append(el);
+                // this searches each title in the db to see if it exists, to prevent saving the same article twice
+                $.ajax({
+                    url:"/api/articles/exist",
+                    type:"POST",
+                    data: {title:item.title}
+                }).done(function(response){
+                    if (response == true) {
+                        // yes the article exists in the database already
+                        var el = `
+                        <div id=article_${i}>
+                            <h4><a href="${item.link}">${item.title}</a></h4>
+                            <p>Link:    <a href="${item.link}">${item.link}</a></p>
+                            <p>Comments:    <a href="${item.comments}">${item.comments}</a></p>
+                            <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
+                            <button type="button" name="button" class="saveArticlebtn" disabled>Saved</button>
+                        </div>
+                        <hr>
+                        `;
+                        $("#articleContainer").append(el);
+                    }
+                    else {
+
+                        // no the article does not exist
+                        var el = `
+                        <div id=article_${i}>
+                            <h4><a href="${item.link}">${item.title}</a></h4>
+                            <p>Link:    <a href="${item.link}">${item.link}</a></p>
+                            <p>Comments:    <a href="${item.comments}">${item.comments}</a></p>
+                            <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
+                            <button type="button" name="button" class="saveArticlebtn" >Save Article</button>
+                        </div>
+                        <hr>
+                        `;
+                        $("#articleContainer").append(el);
+                    }
+                }).fail(function(err){
+                    console.log(err);
+                });
+
+
+
             });
 
         }).done(function(data){}).fail(function(error){});
@@ -77,8 +106,8 @@ $(document).ready(function(){
             type: "POST",
             data: data
         }).done(function(response){
-            $(fullDivContents[9]).prop("disabled",true);
             currentNode.text("Saved");
+            currentNode.prop("disabled",true);
         }).fail(function(error){
             console.log(error);
         });

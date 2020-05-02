@@ -23,8 +23,6 @@ router.get('/saved', function(req,res){
             results.forEach(function(item, i) {
                 articleObjects.push(item);
             });
-
-            console.log(articleObjects);
             res.render("savedarticles",{articles:articleObjects});
         }
     });
