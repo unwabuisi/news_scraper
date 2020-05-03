@@ -41,7 +41,8 @@ This web application was deployed through Heroku and uses the following librarie
 [/api/notes](https://evening-coast-01303.herokuapp.com/api/notes) - returns all saved notes in the database; does not show relational data on which notes are associated with which articles
 
 
-
+### Future features:
+- [ ] Click to update notes that are already in the database
 
 ### Personal Notes:
 
@@ -60,3 +61,5 @@ This web application was deployed through Heroku and uses the following librarie
 	1. Mongoose by definition is a non-relational database and I had to build a one-to-many relationship with the Articles and their respective Notes (an article has many notes; each note is linked to only one article) There was not much info online about cascading deletes (when you delete an Article, you also have to delete associated Notes) so I had to build a custom method which works how I expected it to.
 	2. Event Delegation with jquery buttons was a small speed bump, if anything it's made me want to look for ways I can use vanilla JS instead.
 	3. Web Scraping is ugly, but keeping html elements intact with top comments was a nice feature. Sometimes comments on HackerNews have things like code blocks, or outbound links and finding a way to preserve those formats was a challenge I enjoyed overcoming.
+
+
