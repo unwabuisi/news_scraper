@@ -48,7 +48,9 @@ app.listen(PORT, function() {
 mongoose.Promise = Promise;
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/newsScraper", {
+// testing URI - mongodb://localhost/newsScraper
+// production URI - mongodb://admin:jumpman23@ds145178.mlab.com:45178/heroku_xwm528cl
+mongoose.connect("mongodb://admin:jumpman23@ds145178.mlab.com:45178/heroku_xwm528cl", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
