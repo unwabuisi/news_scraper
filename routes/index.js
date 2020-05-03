@@ -13,7 +13,6 @@ router.get('/', function (req, res) {
 
 // saved articles page
 router.get('/saved', function(req,res){
-
     db.Article.find({}).populate("notes").lean().exec(function(err,results){
         if (err) {
             res.status(500).send(err);

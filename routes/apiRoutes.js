@@ -6,6 +6,13 @@ var axios = require("axios");
 var db = require("../models");
 
 
+// Routes =====================================================================
+
+
+// SCRAPE ROUTES ============
+// scrapes the hackernews front page
+// returns a JSON object with inidividual JSON objects that have each posts:
+    // title, article link, and a "comments" link the hackernews discussion
 router.get("/scrape", function(req,res){
     axios.get("https://news.ycombinator.com/over?points=100").then(function(html){
         var completelisting = [];
@@ -62,6 +69,8 @@ router.get("/scrape", function(req,res){
     });
 });
 
+// used to get the first comment on the hackernews discussion page
+// returns an html blob
 router.get("/scrape/:commentsPageID", function(req,res){
     var commentsPageID = req.params.commentsPageID.toString();
 
@@ -71,7 +80,11 @@ router.get("/scrape/:commentsPageID", function(req,res){
         res.status(200).send(topComment);
     });
 });
+// ========================================================================
 
+// DB ARTICLE ROUTES
+// grabs all db article entries and their associated / related "notes"
+// returns a JSON object
 router.get("/all", function(req,res){
     db.Article.find({}).populate("notes").lean().exec(function(err,articles){
         if (err) {
@@ -83,6 +96,8 @@ router.get("/all", function(req,res){
     });
 });
 
+// grabs a specific article by it's ID and also populates it's related "notes"
+// returns a JSON object
 router.get("/all/:articleid", function(req,res){
     db.Article.findById({_id:req.params.articleid}).populate("notes").exec(function(err,article){
         if (err) {
@@ -94,6 +109,8 @@ router.get("/all/:articleid", function(req,res){
     });
 });
 
+// grabs all articles in db
+// returns json object with article objects
 router.get("/articles", function(req,res){
 
     db.Article.find({}).then(function(articles){
@@ -102,6 +119,8 @@ router.get("/articles", function(req,res){
         res.status(500).send(err);
     });
 });
+
+// creates a new article object and pushes it to the db
 router.post("/articles", function(req,res){
 
     // creates new article instance / object
@@ -121,6 +140,9 @@ router.post("/articles", function(req,res){
 
 
 });
+
+// checks to see if an article exists in the database already
+// returns true / false boolean value
 router.post("/articles/exist", function(req,res){
 
     // search database for title of article and return true / false value based on whether it is in DB or not
@@ -137,6 +159,8 @@ router.post("/articles/exist", function(req,res){
     });
 
 });
+
+// adds a note to the the respective (matching article) notes array
 router.post("/articles/:articleid", function(req,res){
 
     // add note id to article's notes array
@@ -156,6 +180,8 @@ router.post("/articles/:articleid", function(req,res){
 
 
 });
+
+// deletes all articles from the database
 router.delete("/articles", function(req,res){
     db.Article.deleteMany({},function(response){
     });
@@ -163,7 +189,11 @@ router.delete("/articles", function(req,res){
     });
     res.status(200).end();
 });
+// ============================================================
 
+// DB NOTES ROUTES
+// find all notes in the database
+// returns a large json object with all notes
 router.get("/notes", function(req,res){
     db.Note.find({}).then(function(notes){
         res.status(200).json(notes).end();
@@ -171,6 +201,8 @@ router.get("/notes", function(req,res){
         res.status(500).send(err);
     });
 });
+
+// creates a note object and adds it to the database
 router.post("/notes", function(req,res){
 
     // creates new note instance / object
@@ -186,6 +218,8 @@ router.post("/notes", function(req,res){
         console.log(err);
     });
 });
+
+// deletes a specific note, according to it's ID
 router.delete("/notes/:noteid", function(req,res){
     db.Note.deleteOne({
         _id:req.params.noteid
@@ -195,6 +229,6 @@ router.delete("/notes/:noteid", function(req,res){
         res.status(500).send(err);
     });
 });
-
+// ============================================================
 
 module.exports = router;
