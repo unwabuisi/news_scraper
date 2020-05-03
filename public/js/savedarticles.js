@@ -8,7 +8,12 @@ $(document).ready(function(){
 
             notesDiv.empty();
             response.notes.forEach(function(item, i) {
-                notesDiv.append(`${item.body} \t\t<button type="button" class="noteDeletebtn" data-noteid="${item._id}">X</button><br>`);
+                notesDiv.append(`
+                    <div class="row grey lighten-3">
+                        <button type="button" class="btn-small red darken-2 noteDeletebtn" data-noteid="${item._id}"><i class="material-icons">delete</i></button>
+                        <span class="articleNote">${item.body}</span>
+                    </div>
+                    `);
             });
         });
     }
@@ -21,8 +26,22 @@ $(document).ready(function(){
 
         noteLister(articleID,noteDiv);
 
-        // show text area to add notes
-        parentNode.find("form").show();
+        // this if / else checks to see if the textarea form for adding notes is visible
+        // and toggles whether it is shown / hidden
+        if ($(parentNode).find("form").is(":visible")) {
+            // hide text area for adding notes
+            parentNode.find("form").hide();
+            parentNode.find("#notelist_"+articleID).hide();
+
+        }
+        else {
+            // show text area to add notes
+            parentNode.find("form").show();
+            parentNode.find("#notelist_"+articleID).show();
+
+        }
+
+
 
     });
 
@@ -86,7 +105,7 @@ $(document).ready(function(){
     // handle deleting notes
     $(".articleContainer").on("click", ".noteDeletebtn", function(){
         var noteID = $(this).data("noteid");
-        var parentNode = $(this).parent();
+        var parentNode = $(this).parent().parent();
         var articleID = parentNode.attr("id").slice(9);
 
         $.ajax({
@@ -100,4 +119,7 @@ $(document).ready(function(){
             console.log(err);
         });
     });
+
+    //activates modal
+    $(".modal").modal();
 });

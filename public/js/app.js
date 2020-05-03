@@ -27,11 +27,11 @@ $(document).ready(function(){
                         // yes the article exists in the database already
                         var el = `
                         <div id=article_${i}>
-                            <h4><a target="_blank" href="${item.link}">${item.title}</a></h4>
+                            <h5><a target="_blank" href="${item.link}">${item.title}</a></h5>
                             <p>Link:    <a target="_blank" href="${item.link}">${item.link}</a></p>
                             <p>Comments:    <a target="_blank" href="${item.comments}">${item.comments}</a></p>
-                            <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
-                            <button type="button" name="button" class="saveArticlebtn" disabled>Saved</button>
+                            <button type="button" name="button" class="btn topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
+                            <button type="button" name="button" class="btn saveArticlebtn" disabled>Saved</button>
                         </div>
                         <hr>
                         `;
@@ -42,11 +42,11 @@ $(document).ready(function(){
                         // no the article does not exist
                         var el = `
                         <div id=article_${i}>
-                            <h4><a target="_blank" href="${item.link}">${item.title}</a></h4>
+                            <h5><a target="_blank" href="${item.link}">${item.title}</a></h5>
                             <p>Link:    <a target="_blank" href="${item.link}">${item.link}</a></p>
                             <p>Comments:    <a target="_blank" href="${item.comments}">${item.comments}</a></p>
-                            <button type="button" name="button" class="topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
-                            <button type="button" name="button" class="saveArticlebtn" >Save Article</button>
+                            <button type="button" name="button" class="btn-small topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
+                            <button type="button" name="button" class="btn-small saveArticlebtn" >Save Article</button>
                         </div>
                         <hr>
                         `;
@@ -66,16 +66,35 @@ $(document).ready(function(){
     // uses an event delegator on the container for the new topcomment button class
     $("#articleContainer").on("click", ".topCommentbtn" , function(){
         var parentNode = $(this);
+
+        // this will be used to check if a top comment is already in the article div
+        // If the value is 11, there is no comment, if it is more than 11, there is a comment already
+        var topCommentCheck = parentNode.parent().contents().length;
+
         var commentsPageID = $(this).data("cmt");
+        var topcmt;
 
-        $.get("/api/scrape/"+commentsPageID, function(data){
-            //removes reply div from returned html
-            var topcmt = data.split(`<div class="reply">`)[0];
+        if (topCommentCheck != 11) {
+            // close the top comment div by removing the top comment that is already there
+            parentNode.parent().contents()[7].remove();
 
-            // prepends the top comment text/html above this "see top comment" button
-            parentNode.before("<p>" + topcmt + "</p>");
+        }
+        else {
+            $.get("/api/scrape/"+commentsPageID, function(data){
 
-        }).done(function(data){}).fail(function(error){});
+                //removes reply div from returned html
+                topcmt = data.split(`<div class="reply">`)[0];
+            }).done(function(data){
+                
+                // prepends the top comment text/html above this "see top comment" button
+                parentNode.before("<span>" + topcmt + "</span>");
+
+            }).fail(function(error){
+                console.log(error);
+            });
+
+        }
+
 
     });
 
