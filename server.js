@@ -1,6 +1,5 @@
 // Dependencies ==============================================================
 var bodyParser = require("body-parser");
-var logger = require("morgan");
 var mongoose = require("mongoose");
 
 // Express web server set up =================================================
@@ -9,8 +8,6 @@ var exphbs = require("express-handlebars");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
-// Use morgan and body parser with our app
-// app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
