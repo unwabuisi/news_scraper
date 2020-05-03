@@ -181,6 +181,24 @@ router.post("/articles/:articleid", function(req,res){
 
 });
 
+// handles deleting an individual article from the database
+router.delete("/articles/:articleid", function(req,res){
+
+    // first find the article in the database
+    db.Article.findOne({_id:req.params.articleid}).then(function(article){
+
+        // then use this custom method to delete the associated / linked "notes"
+        article.cascadeDeleteNotes();
+
+        // then delete article from database
+        db.Article.deleteOne({_id:req.params.articleid}).then(function(response){
+            res.status(200).end();
+        }).catch(function(err){
+            console.log(err);
+        });
+    });
+});
+
 // deletes all articles from the database
 router.delete("/articles", function(req,res){
     db.Article.deleteMany({},function(response){

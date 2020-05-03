@@ -30,7 +30,7 @@ $(document).ready(function(){
                             <h5><a target="_blank" href="${item.link}">${item.title}</a></h5>
                             <p>Link:    <a target="_blank" href="${item.link}">${item.link}</a></p>
                             <p>Comments:    <a target="_blank" href="${item.comments}">${item.comments}</a></p>
-                            <button type="button" name="button" class="btn topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
+                            <button type="button" name="button" class="btn waves-effect waves-light topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
                             <button type="button" name="button" class="btn saveArticlebtn" disabled>Saved</button>
                         </div>
                         <hr>
@@ -45,7 +45,7 @@ $(document).ready(function(){
                             <h5><a target="_blank" href="${item.link}">${item.title}</a></h5>
                             <p>Link:    <a target="_blank" href="${item.link}">${item.link}</a></p>
                             <p>Comments:    <a target="_blank" href="${item.comments}">${item.comments}</a></p>
-                            <button type="button" name="button" class="btn-small topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
+                            <button type="button" name="button" class="btn-small waves-effect waves-dark topCommentbtn" id="${item.comments.substr(37)}" data-cmt="${item.comments.substr(37)}">See Top Comment</button>
                             <button type="button" name="button" class="btn-small saveArticlebtn" >Save Article</button>
                         </div>
                         <hr>
@@ -85,7 +85,7 @@ $(document).ready(function(){
                 //removes reply div from returned html
                 topcmt = data.split(`<div class="reply">`)[0];
             }).done(function(data){
-                
+
                 // prepends the top comment text/html above this "see top comment" button
                 parentNode.before("<span>" + topcmt + "</span>");
 

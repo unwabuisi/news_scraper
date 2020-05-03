@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-
+var Note = require("./Note.js");
 
 var ArticleSchema = new Schema({
 
@@ -28,7 +28,19 @@ var ArticleSchema = new Schema({
 
 });
 
+// this is a custom method to be called before removing an Article from the database
+// this method clears out all the notes in the "notes" array
+// this method also removes the respective notes from the Notes collection db
+ArticleSchema.methods.cascadeDeleteNotes = function(){
+    this.notes.forEach(function(noteID, i) {
+        Note.deleteOne({_id:noteID}).then(function(response){
+        }).catch(function(err){
+            console.log(err);
+        });
 
+    });
+
+};
 
 
 // create a model, Article using the schema above

@@ -9,9 +9,13 @@ $(document).ready(function(){
             notesDiv.empty();
             response.notes.forEach(function(item, i) {
                 notesDiv.append(`
-                    <div class="row grey lighten-3">
-                        <button type="button" class="btn-small red darken-2 noteDeletebtn" data-noteid="${item._id}"><i class="material-icons">delete</i></button>
-                        <span class="articleNote">${item.body}</span>
+                    <div class="row grey lighten-3 valign-wrapper">
+                        <div class="col s1">
+                            <button type="button" class="btn-small red darken-2 noteDeletebtn" data-noteid="${item._id}"><i class="material-icons">delete</i></button>
+                        </div>
+                        <div class="col s11">
+                            <span class="articleNote">${item.body}</span>
+                        </div>
                     </div>
                     `);
             });
@@ -115,6 +119,20 @@ $(document).ready(function(){
             //note was successfully deleted
             noteLister(articleID,parentNode);
 
+        }).fail(function(err){
+            console.log(err);
+        });
+    });
+
+    $(".articleDeleteBtn").on("click", function(){
+        var articleID = $(this).data("articleid");
+
+        $.ajax({
+            url:"/api/articles/"+articleID,
+            type: "DELETE"
+        }).done(function(response){
+            console.log(response);
+            location.reload();
         }).fail(function(err){
             console.log(err);
         });

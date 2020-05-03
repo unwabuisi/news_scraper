@@ -2,12 +2,13 @@
     margin-right: 10px;
 }
 
-.articleNotesbtn {
+.articleNotesbtn, .articleDeleteBtn {
     margin-top:20px;
 }
 
 .articleNote {
     font-size: 20px;
+    white-space: pre-wrap; /* -- This preserves line-breaks -- */
 }
 h5 > a {
     color:black;
