@@ -1,16 +1,22 @@
 # HackerNews Scraper
 
-Hacker is one of my favorite sites to browse, so I created a scraper / note-taker.
+### Live Version - [HERE](https://dashboard.heroku.com/apps/evening-coast-01303)
 
-This web application scrapes the top 30 posts from the HackerNews front page and allows you to quickly navigate to the article link, discussion, or see the top comment on the discussion page.
+HackerNews is one of my favorite sites to browse, so I created a scraper / note-taker.
 
-This web application uses the following libraries/frameworks:
-- MaterializeCSS
-- MongoDB / MongooseJS (NoSQL database)
-- CheerioJS (web scraper)
-- Axios (web requests)
-- Express (routing / API design)
-- Handlebars (server-side HTML templating)
+This  application scrapes the top 30 posts from the HackerNews front page and allows users to quickly navigate to the article link, discussion, or see the top comment on the discussion page.
+
+If the user likes an article or the discussion, they can save it to a database and add notes of their own.
+
+
+This web application was deployed through Heroku and uses the following libraries/frameworks:
+- [Express](https://expressjs.com/) (Routing / API design)
+- [Handlebars](https://handlebarsjs.com/guide/) (server-side HTML templating)
+- [CheerioJS](https://cheerio.js.org/) (web scraper)
+- [MongoDB](https://www.mongodb.com/) / [MongooseJS](https://mongoosejs.com/docs/index.html) (NoSQL database)
+- [mLab MongoDB](https://www.mlab.com/) (remote MongoDB DaaS for Heroku deployment)
+- [MaterializeCSS](https://materializecss.com/getting-started.html)
+- [Axios](https://github.com/axios/axios) (web requests)
 
 
 ###### On the home page you can:
@@ -19,20 +25,20 @@ This web application uses the following libraries/frameworks:
 
 ###### On the Saved Articles page you can:
 - delete a saved article from the database
-- add / remove notes on a saved article
+- add / remove your own notes on a saved article
 
 
+##### API Routes - These routes will return JSON objects from the database
 
+[/api/all](https://evening-coast-01303.herokuapp.com/api/all) - returns all saved articles in the database with their "notes" populated
 
-##### API Routes - These routes will return JSON objects
+[/api/all/:articleID](https://evening-coast-01303.herokuapp.com/api/all/) - returns an object for a specific article, depending on which article ID paramater is passed
 
-/api/all - returns all saved articles in the database with all their "notes" populated
+\* *to test: visit the [/api/all](https://evening-coast-01303.herokuapp.com/api/all/articleID) route and copy an article's ID then replace "articleID" at the end of this route*
 
-/api/all/:articleID - returns a specific article's object
+[/api/articles/](https://evening-coast-01303.herokuapp.com/api/articles) - returns all saved articles in the database **without** their "notes" populated
 
-/api/articles/ - returns all saved articles in the database **without** "notes" populated
-
-/api/notes - returns all saved notes in the database
+[/api/notes](https://evening-coast-01303.herokuapp.com/api/notes) - returns all saved notes in the database; does not show relational data on which notes are associated with which articles
 
 
 
