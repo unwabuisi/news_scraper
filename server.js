@@ -22,8 +22,20 @@ app.use("/api", apiRoutes);
 // Make public a static dir
 app.use(express.static("public"));
 
+var hbs = exphbs.create({
+    // Specify helpers which are only registered on this instance.
+    helpers: {
+        trimDate: function (dateToTrim) {
+            // this will trim dates
+            var newDate = String(dateToTrim).substring(0,15);
+            return newDate;
+        }
+    },
+    defaultLayout: "main"
+});
+
 // Set Handlebars as the default templating engine.
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 // Express Web Server listener

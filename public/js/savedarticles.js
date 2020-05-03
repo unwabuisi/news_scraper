@@ -15,6 +15,7 @@ $(document).ready(function(){
                         </div>
                         <div class="col s11">
                             <span class="articleNote">${item.body}</span>
+                            <p class="noteAddedDate grey-text ">${String(item.createdAt).substr(0,10)}</p>
                         </div>
                     </div>
                     `);
@@ -109,7 +110,8 @@ $(document).ready(function(){
     // handle deleting notes
     $(".articleContainer").on("click", ".noteDeletebtn", function(){
         var noteID = $(this).data("noteid");
-        var parentNode = $(this).parent().parent();
+        var parentNode = $(this).parent().parent().parent();
+        console.log(parentNode);
         var articleID = parentNode.attr("id").slice(9);
 
         $.ajax({

@@ -7,8 +7,20 @@
 }
 
 .articleNote {
-    font-size: 20px;
+    font-size: 17px;
     white-space: pre-wrap; /* -- This preserves line-breaks -- */
+
+}
+.articleAddedDate {
+    font-style: italic;
+    margin-top: -10px;
+    font-size: 10px;
+}
+
+.noteAddedDate {
+    font-size:8px;
+    margin-top: -2px;
+    font-style: italic;
 }
 h5 > a {
     color:black;
