@@ -1,6 +1,6 @@
 # HackerNews Scraper
 
-### Live Version - [HERE](https://dashboard.heroku.com/apps/evening-coast-01303)
+### Live Version - [HERE](https://evening-coast-01303.herokuapp.com/)
 
 HackerNews is one of my favorite sites to browse, so I created a scraper / note-taker.
 
