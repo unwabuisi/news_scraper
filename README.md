@@ -43,6 +43,8 @@ This web application was deployed through Heroku and uses the following librarie
 
 ### Future features:
 - [ ] Click to update notes that are already in the database
+- [ ] Sort saved articles by date added? (or at least have it in reverse chronological order)
+- [x] When top comment is open set button text to "close top comment"
 
 ### Personal Notes:
 

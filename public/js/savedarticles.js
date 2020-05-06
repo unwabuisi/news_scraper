@@ -14,7 +14,7 @@ $(document).ready(function(){
                             <button type="button" class="btn-small red darken-2 noteDeletebtn" data-noteid="${item._id}"><i class="material-icons">delete</i></button>
                         </div>
                         <div class="col s11">
-                            <span class="articleNote">${item.body}</span>
+                            <span class="articleNote" id="note_${item._id}">${item.body}</span>
                             <p class="noteAddedDate grey-text ">${String(item.createdAt).substr(0,10)}</p>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ $(document).ready(function(){
         });
     });
 
-    // handle deleting notes
+    // handles deleting notes
     $(".articleContainer").on("click", ".noteDeletebtn", function(){
         var noteID = $(this).data("noteid");
         var parentNode = $(this).parent().parent().parent();
@@ -126,6 +126,7 @@ $(document).ready(function(){
         });
     });
 
+    // handles deleting an article
     $(".articleDeleteBtn").on("click", function(){
         var articleID = $(this).data("articleid");
 
@@ -138,6 +139,12 @@ $(document).ready(function(){
         }).fail(function(err){
             console.log(err);
         });
+    });
+
+    $(".articleContainer").on("click", ".articleNote", function(){
+        var noteText = $(this).text();
+        
+
     });
 
     //activates modal

@@ -68,7 +68,7 @@ $(document).ready(function(){
         var parentNode = $(this);
 
         // this will be used to check if a top comment is already in the article div
-        // If the value is 11, there is no comment, if it is more than 11, there is a comment already
+        // If the value is 11, there is no comment present, if it is more than 11, there is a comment already
         var topCommentCheck = parentNode.parent().contents().length;
 
         var commentsPageID = $(this).data("cmt");
@@ -77,6 +77,7 @@ $(document).ready(function(){
         if (topCommentCheck != 11) {
             // close the top comment div by removing the top comment that is already there
             parentNode.parent().contents()[7].remove();
+            parentNode.text("See Top Comment");
 
         }
         else {
@@ -88,6 +89,7 @@ $(document).ready(function(){
 
                 // prepends the top comment text/html above this "see top comment" button
                 parentNode.before("<span>" + topcmt + "</span>");
+                parentNode.text("Close Top Comment");
 
             }).fail(function(error){
                 console.log(error);
