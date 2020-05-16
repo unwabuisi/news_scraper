@@ -88,7 +88,7 @@ $(document).ready(function(){
             }).done(function(data){
 
                 // prepends the top comment text/html above this "see top comment" button
-                parentNode.before("<span>" + topcmt + "</span>");
+                parentNode.before("<span>" + topcmt + "</span><br>");
                 parentNode.text("Close Top Comment");
 
             }).fail(function(error){
