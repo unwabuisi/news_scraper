@@ -97,14 +97,17 @@ $(document).ready(function(){
 
     // clear all articles from db and reload page
     $("#clear").on("click", function(){
-        $.ajax({
-            url:"/api/articles",
-            type: "DELETE"
-        }).done(function(response){
-            location.reload();
-        }).fail(function(err){
-            console.log(err);
-        });
+        var deleteConfirmation = confirm("Are you sure you want to delete all saved articles?");
+        if (deleteConfirmation == true) {
+            $.ajax({
+                url:"/api/articles",
+                type: "DELETE"
+            }).done(function(response){
+                location.reload();
+            }).fail(function(err){
+                console.log(err);
+            });
+        }
     });
 
     // handles deleting notes
@@ -143,7 +146,7 @@ $(document).ready(function(){
 
     $(".articleContainer").on("click", ".articleNote", function(){
         var noteText = $(this).text();
-        
+
 
     });
 
