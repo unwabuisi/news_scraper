@@ -50,12 +50,13 @@ mongoose.Promise = Promise;
 // Database configuration with mongoose
 // testing URI - mongodb://localhost/newsScraper
 // production URI - mongodb://admin:jumpman23@ds145178.mlab.com:45178/heroku_xwm528cl
+// migrated URI - mongodb+srv://admin:jumpan23@cluster-xwm528cl.ajvod.mongodb.net/heroku_xwm528cl?retryWrites=true&w=majority
 // mongoose.connect("mongodb://localhost/newsScraper", {
 //     useNewUrlParser: true,
 //     useUnifiedTopology: true
 // });
 
-mongoose.connect("mongodb://admin:jumpman23@ds145178.mlab.com:45178/heroku_xwm528cl", {
+mongoose.connect("mongodb+srv://admin:jumpman23@cluster-xwm528cl.ajvod.mongodb.net/heroku_xwm528cl?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
