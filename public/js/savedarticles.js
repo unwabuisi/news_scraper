@@ -5,7 +5,6 @@ $(document).ready(function(){
         $.get("/api/all/"+articleID, function(data){
 
         }).done(function(response){
-
             notesDiv.empty();
             response.notes.forEach(function(item, i) {
                 notesDiv.append(`

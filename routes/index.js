@@ -22,6 +22,7 @@ router.get('/saved', function(req,res){
             results.forEach(function(item, i) {
                 articleObjects.push(item);
             });
+            articleObjects.reverse();
             res.render("savedarticles",{articles:articleObjects});
         }
     });
