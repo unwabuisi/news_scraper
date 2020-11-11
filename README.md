@@ -14,7 +14,8 @@ This web application was deployed through Heroku and uses the following librarie
 - [Handlebars](https://handlebarsjs.com/guide/) (server-side HTML templating)
 - [CheerioJS](https://cheerio.js.org/) (web scraper)
 - [MongoDB](https://www.mongodb.com/) / [MongooseJS](https://mongoosejs.com/docs/index.html) (NoSQL database)
-- [mLab MongoDB](https://www.mlab.com/) (remote MongoDB DaaS for Heroku deployment)
+- ~~[mLab MongoDB](https://www.mlab.com/) (remote MongoDB DaaS for Heroku deployment)~~
+- [MongoDB Atlas](https://cloud.mongodb.com/v2/5fab4bde5c6ea8006cd72850#clusters) (Cloud based DB)
 - [MaterializeCSS](https://materializecss.com/getting-started.html)
 - [Axios](https://github.com/axios/axios) (web requests)
 
